@@ -32,13 +32,25 @@ int main()
 		i++;
 	}
 	s[i] = '\0';
+	// ft_putstr(s);
+	// ft_putstr("\n");
+	printf("2.%p\n", s);	
+	free(s);
 	i = 0;
-	while (i < 40)
+	while (i < 49)
 	{
-		printf("%d: ", i);
-		s = malloc(sizeof(char) * 110);
+		s[i] = 'x';
 		i++;
 	}
+	// ft_putstr(s);
+	// ft_putstr("\n");
+	// i = 1;
+	// while (i < 40)
+	// {
+	// 	printf("%d: ", i);
+	// 	s = malloc(sizeof(char) * 110);
+	// 	i++;
+	// }
 	
 	return (0);
 }

@@ -47,26 +47,21 @@ void	new_block(size_t size)
 
 void	*add_block(size_t size)
 {
+	t_block	*block;
+
 	if (size <= N)
 	{
 		if (!m_list.tiny)
 		{
-			printf("%p\n", m_list.tiny);
 			new_block(size);
 		}
-		printf("\t1.%p\n", m_list.tiny);
+		printf("0.%p\n", m_list.tiny);
 		*(size_t *)m_list.tiny = size;
-		printf("\t2.%p\n", m_list.tiny);
+		m_list.tiny += sizeof(block->size);
+		*(void **)m_list.tiny = m_list.tiny - sizeof(block->size) + N;
 		m_list.tiny += sizeof(size);
-		printf("\t3.%p\n", m_list.tiny);
-		*(void **)m_list.tiny = m_list.tiny - sizeof(size) + N;
-		printf("\t4.%p\n", m_list.tiny);
-		m_list.tiny += sizeof(size);
-		printf("\t5.%p\n", m_list.tiny);
 		void *res = m_list.tiny;
-		printf("\t6.%p\n", m_list.tiny);
-		m_list.tiny += N - 4;
-		printf("\t7.%p\n", m_list.tiny);
+		m_list.tiny += N - 16;
 		return(res);
 	}
 	else if (size <= M)
@@ -77,14 +72,13 @@ void	*add_block(size_t size)
 	{
 
 	}
-
-
+	return (NULL);
 }
 
 void	*malloc(size_t size)
 {
 	void	*ret;
 	ret = add_block(size);
-	printf("%p\n", m_list.tiny);
+	printf("1.%p\n", ret);
 	return (ret);
 }
