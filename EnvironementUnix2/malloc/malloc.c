@@ -22,7 +22,6 @@ void	*alloc_pages(size_t size)
 	
 	pagesize = getpagesize();
 	len = (size / pagesize + (size % pagesize != 0)) * pagesize;
-	printf("len: %d\n", len);
 	plen = mmap(0, len, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 	if (plen == MAP_FAILED)
 		return (NULL);
@@ -55,7 +54,6 @@ void	*add_block(size_t size)
 		{
 			new_block(size);
 		}
-		printf("0.%p\n", m_list.tiny);
 		*(size_t *)m_list.tiny = size;
 		m_list.tiny += sizeof(block->size);
 		*(void **)m_list.tiny = m_list.tiny - sizeof(block->size) + N;

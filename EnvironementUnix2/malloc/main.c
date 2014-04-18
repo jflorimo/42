@@ -51,6 +51,34 @@ int main()
 	// 	s = malloc(sizeof(char) * 110);
 	// 	i++;
 	// }
-	
+	i = 0;
+	char *x = malloc(sizeof(char) * 50);
+	while (i < 40)
+	{
+		x[i] = 'x';
+		i++;
+	}
+	i = 0;
+	char *y = malloc(sizeof(char) * 50);
+	while (i < 40)
+	{
+		y[i] = 'y';
+		i++;
+	}
+	i = 0;
+	char *z = malloc(sizeof(char) * 50);
+	while (i < 40)
+	{
+		z[i] = 'z';
+		i++;
+	}
+	free (y);
+	i = 0;
+	char *t = malloc(sizeof(char) * 50);
+	while (i < 40)
+	{
+		t[i] = 't';
+		i++;
+	}
 	return (0);
 }

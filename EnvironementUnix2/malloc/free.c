@@ -16,10 +16,10 @@
 
 void free (void *ptr)
 {
-	printf("3.%p\n", ptr);
-	ptr -= 16;
-	printf("4.%p\n", ptr);
-	size_t len = *(size_t *)ptr;
-	printf("5.%d\n", (int)len);
+	size_t len;
+	t_block	*block;
+
+	ptr -= sizeof(block->size) + sizeof(block->next);
+	len = *(size_t *)ptr;
 	munmap(ptr, len);
 }
