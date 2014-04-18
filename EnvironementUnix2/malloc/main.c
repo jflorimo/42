@@ -12,31 +12,33 @@
 
 #include <unistd.h>
 #include "malloc.h"
+#include <stdio.h>
 
 int main()
 {
 	char *s;
 	int	i = 0;
 
-	s = malloc(sizeof(char) * 15000);
-	while (i < 15000)
+	s = malloc(sizeof(char) * 50);
+	while (i < 50)
 	{
 		s[i] = '\0';
 		i++;
 	}
 	i = 0;
-	while (i < 14999)
+	while (i < 49)
 	{
 		s[i] = 'a';
 		i++;
 	}
 	s[i] = '\0';
 	i = 0;
-	while (s[i])
+	while (i < 40)
 	{
-		write(1, &s[i], 1);
+		printf("%d: ", i);
+		s = malloc(sizeof(char) * 110);
 		i++;
 	}
-	write(1, "\n", 1);
+	
 	return (0);
 }

@@ -32,6 +32,7 @@ typedef struct		s_list
 
 t_list				m_list;
 
+void				ft_putstr(char const *s);
 void				*malloc(size_t size);
 
 #endif
