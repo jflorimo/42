@@ -17,9 +17,24 @@
 void free (void *ptr)
 {
 	size_t len;
-	t_block	*block;
+	size_t blocklen;
+	t_block    *block;
 
-	ptr -= sizeof(block->size) + sizeof(block->next);
-	len = *(size_t *)ptr;
-	munmap(ptr, len);
+
+	// printf("1ptr%p\n", ptr);
+	blocklen = sizeof(block->size) + sizeof(block->next);
+	ptr -= blocklen;
+	if (*(size_t *)ptr > 1024)
+	{
+		len = *(size_t *)ptr + blocklen;
+		printf("apres%d - %d\n", *(int *)ptr, (len / getpagesize() + (len % getpagesize() != 0)) * getpagesize());
+		munmap(ptr, (len / getpagesize() + (len % getpagesize() != 0)) * getpagesize());
+	}
+	else
+	{
+	// printf("2ptr%p\n", ptr);
+	// printf("avant%d\n", *(int *)ptr);
+	*(size_t *)ptr = 0;
+	// printf("apres%d\n", *(int *)ptr);
+	}
 }
