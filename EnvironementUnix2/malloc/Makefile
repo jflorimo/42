@@ -16,13 +16,12 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 LN_NAME = libft_malloc.so
-GCCW = gcc -Wall -Wextra -Werror
+GCCW = gcc -Wall -Wextra -Werror -shared
 IFLAGS = -I./
 SRC = malloc.c
 SRC += free.c
 SRC += ft_putstr.c
 SRC += header.c
-SRC += malloc.c
 SRC += realloc.c
 SRC += show_alloc_mem.c
 
@@ -31,8 +30,7 @@ OBJECT = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECT)
-	ar rc $(NAME) $(OBJECT)
-	ranlib $@
+	$(GCCW) -o $(NAME) $(OBJECT) $(IFLAGS)
 	/bin/rm -rf $(LN_NAME)
 	ln -s $(NAME) $(LN_NAME)
 
