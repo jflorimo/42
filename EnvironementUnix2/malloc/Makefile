@@ -16,9 +16,15 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 LN_NAME = libft_malloc.so
-GCCW = gcc -Wall -Wextra -Werror -g
+GCCW = gcc -Wall -Wextra -Werror
 IFLAGS = -I./
 SRC = malloc.c
+SRC += free.c
+SRC += ft_putstr.c
+SRC += header.c
+SRC += malloc.c
+SRC += realloc.c
+SRC += show_alloc_mem.c
 
 OBJECT = $(SRC:.c=.o)
 

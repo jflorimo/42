@@ -11,30 +11,26 @@
 /* ************************************************************************** */
 
 #include <sys/mman.h>
-#include <stdio.h>
 #include "malloc.h"
 
-void free (void *ptr)
+void			free(void *ptr)
 {
-	size_t len;
-	size_t blocklen;
-	t_block    *block;
+	size_t		len;
+	size_t		blocklen;
+	int			pagesize;
+	t_block		*block;
 
-
-	// printf("1ptr%p\n", ptr);
 	blocklen = sizeof(block->size) + sizeof(block->next);
 	ptr -= blocklen;
-	if (*(size_t *)ptr > 1024)
+	if (*(size_t *)ptr > 1024 - 16)
 	{
+		pagesize = getpagesize();
 		len = *(size_t *)ptr + blocklen;
-		printf("apres%d - %d\n", *(int *)ptr, (len / getpagesize() + (len % getpagesize() != 0)) * getpagesize());
-		munmap(ptr, (len / getpagesize() + (len % getpagesize() != 0)) * getpagesize());
+		len = (len / pagesize + (len % pagesize != 0)) * pagesize;
+		munmap(ptr, len);
 	}
 	else
 	{
-	// printf("2ptr%p\n", ptr);
-	// printf("avant%d\n", *(int *)ptr);
-	*(size_t *)ptr = 0;
-	// printf("apres%d\n", *(int *)ptr);
+		*(size_t *)ptr = 0;
 	}
 }
