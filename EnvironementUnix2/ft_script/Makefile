@@ -10,15 +10,14 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME =	ft_nm
+NAME =	ft_script
 
 SRCDIR = srcs/
 
-CFILES =	main.c ft_putstr.c
-
+CFILES =	main.c
 
 SRC = $(addprefix $(SRCDIR), $(CFILES))
-GCC = gcc
+GCC = gcc -Wall -Wextra -Werror
 OBJ = $(SRC:.c=.o)
 HDDIR = includes/
 

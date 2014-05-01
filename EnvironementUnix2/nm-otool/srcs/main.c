@@ -21,32 +21,35 @@
 #include <mach-o/nlist.h>
 #include <sys/stat.h>
 
-void	print_output(int nyms, int symoff, int stroff, char *ptr)
+void						print_output(int n, int s, int t, char *ptr)
 {
-	int i;
-	char *stringtable;
-	struct nlist_64 *el;
+	int						i;
+	char					*stringtable;
+	struct nlist_64			*el;
 
-	el = (void *)ptr + symoff;
-	stringtable = (void *)ptr + stroff;
-
-	for (i = 0; i < nyms; ++i)
+	el = (void *)ptr + s;
+	stringtable = (void *)ptr + t;
+	i = 0;
+	while (i < n)
 	{
 		if (el[i].n_value > 0)
-			printf("%016llx ", el[i].n_value);
-		else
-			printf("                 ");
-		if (!ft_strcmp(stringtable + el[i].n_type, "header"))
 		{
-			printf("T");
+			ft_putstr("00000000");
+			ft_putnbr_base(el[i].n_value, 16);
 		}
 		else
-			printf("%s", stringtable + el[i].n_type);
-		printf(" %s\n", stringtable + el[i].n_un.n_strx);
+			ft_putstr("                 ");
+		if (!ft_strcmp(stringtable + el[i].n_type, "header"))
+			ft_putstr(" T ");
+		else
+			ft_putstr(" U ");
+		ft_putstr(stringtable + el[i].n_un.n_strx);
+		ft_putstr("\n");
+		i++;
 	}
 }
 
-void 	handle_64(void *ptr)
+void						handle_64(void *ptr)
 {
 	int						ncmds;
 	int						i;
@@ -55,24 +58,25 @@ void 	handle_64(void *ptr)
 	struct symtab_command	*sym;
 
 	i = 0;
-	header =(struct mach_header_64 *)ptr;
+	header = (struct mach_header_64 *)ptr;
 	ncmds = header->ncmds;
 	lc = (void *)ptr + sizeof(*header);
-	for (i = 0; i < ncmds; i++)
+	while (i < ncmds)
 	{
-		if(lc->cmd == LC_SYMTAB)
+		if (lc->cmd == LC_SYMTAB)
 		{
-			sym = (struct symtab_command *) lc;
+			sym = (struct symtab_command *)lc;
 			print_output(sym->nsyms, sym->symoff, sym->stroff, ptr);
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;
+		i++;
 	}
 }
 
-void	nm(char *ptr)
+void						nm(char *ptr)
 {
-	int magic_number;
+	int						magic_number;
 
 	magic_number = *(int *)ptr;
 	if (magic_number == MH_MAGIC_64)
@@ -81,11 +85,12 @@ void	nm(char *ptr)
 	}
 }
 
-int main(int ac, char **av)
+int							main(int ac, char **av)
 {
-	int fd;
-	char *ptr;
-	struct stat buf;
+	int						fd;
+	char					*ptr;
+	struct stat				buf;
+
 	if (ac > 1)
 	{
 		if ((fd = open(av[1], O_RDONLY)) < 0)
@@ -96,7 +101,8 @@ int main(int ac, char **av)
 		{
 			return (0);
 		}
-		if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
+		if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
+		== MAP_FAILED)
 			return (0);
 		nm(ptr);
 		if (munmap(ptr, buf.st_size) < 0)
@@ -104,35 +110,3 @@ int main(int ac, char **av)
 	}
 	return (0);
 }
-// void		ft_read_file(char *s)
-// {
-// 	int		fd;
-// 	char	*line;
-
-// 	fd = open(s, O_RDONLY);
-// 	line = NULL;
-// 	while(get_next_line(fd, &line))
-// 	{
-// 		ft_putstr(line);
-// 		ft_putstr("\n");
-// 		free(line);
-// 	}
-// }
-
-// int 		main(int ac, char **av)
-// {
-// 	int		i;
-
-// 	i = 1;
-// 	if (ac > 1)
-// 	{
-// 		while(av[i])
-// 		{
-// 			ft_putstr(av[i]);
-// 			ft_putstr("\n");
-// 			ft_read_file(av[i]);
-// 			i++;
-// 		}
-// 	}
-// 	return (0);
-// }
