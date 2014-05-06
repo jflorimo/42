@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 16:39:39 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 16:40:05 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include "libft.h"
 
-#endif
+void		*ft_memchr(const void *s, int c, size_t n)
+{
+	if (n)
+	{
+		if (*((unsigned char *)s) == (unsigned char)c)
+			return ((void *)s);
+		else
+			return (ft_memchr(++s, c, --n));
+	}
+	return (NULL);
+}

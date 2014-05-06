@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 17:42:48 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 17:43:04 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include "libft.h"
 
-#endif
+char		*ft_strnstr(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	if (!*s2)
+		return ((char *)s1);
+	while (s1[i] && i < n)
+	{
+		j = 0;
+		while (s2[j] == s1[i + j] && (i + j) < n)
+			j++;
+		if (!s2[j])
+			return ((char *)(s1 + i));
+		i++;
+	}
+	return (NULL);
+}

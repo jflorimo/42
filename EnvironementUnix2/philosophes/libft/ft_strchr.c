@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 17:19:04 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 17:19:19 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include "libft.h"
 
-#endif
+char	*ft_strchr(const char *s, int c)
+{
+	if (*s == (char)c)
+		return ((char *)s);
+	if (!*s)
+		return (NULL);
+	return (ft_strchr(++s, c));
+}

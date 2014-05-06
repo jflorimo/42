@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 17:11:13 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 18:24:32 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include <unistd.h>
+#include "libft.h"
 
-#endif
+void	ft_putendl_fd(char const *s, int fd)
+{
+	while (*s)
+		write(fd, s++, 1);
+	write(fd, "\n", 1);
+}

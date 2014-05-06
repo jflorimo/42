@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 16:32:57 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 16:33:43 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include "libft.h"
 
-#endif
+int			ft_lstsize(t_list *begin)
+{
+	t_list	*node;
+	int		i;
+
+	i = 0;
+	node = begin;
+	while (node)
+	{
+		node = node->next;
+		i++;
+	}
+	return (i);
+}

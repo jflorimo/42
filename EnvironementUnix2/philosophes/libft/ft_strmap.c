@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 17:36:11 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 17:37:22 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include <stdlib.h>
+#include "libft.h"
 
-#endif
+char		*ft_strmap(char const *s, char (*f)(char))
+{
+	char	*r;
+	int		i;
+
+	i = 0;
+	if (!s || (r = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1))) == NULL)
+		return (NULL);
+	while (s[i])
+	{
+		r[i] = (*f)(s[i]);
+		i++;
+	}
+	r[i] = '\0';
+	return (r);
+}

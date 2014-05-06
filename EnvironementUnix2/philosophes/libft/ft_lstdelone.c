@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 16:14:33 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 16:15:05 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include <stdlib.h>
+#include "libft.h"
 
-#endif
+void		ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
+{
+	if (alst && *alst && (*del))
+	{
+		del((*alst)->content, (*alst)->content_size);
+		free(*alst);
+		*alst = NULL;
+	}
+}

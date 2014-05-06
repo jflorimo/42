@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 16:12:48 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 16:13:52 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include <stdlib.h>
+#include "libft.h"
 
-#endif
+void		ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+{
+	t_list	*node;
+	t_list	*tmp;
+
+	node = *alst;
+	if (alst && *alst && (*del))
+	{
+		while (node)
+		{
+			tmp = node;
+			node = node->next;
+			(*del)(tmp->content, tmp->content_size);
+			free(tmp);
+		}
+		*alst = NULL;
+	}
+}

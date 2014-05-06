@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 17:23:18 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 17:23:52 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include <stdlib.h>
+#include "libft.h"
 
-#endif
+char		*ft_strdup(char const *s1)
+{
+	char	*s2;
+	int		len;
+
+	len = ft_strlen(s1);
+	s2 = (char *)malloc(sizeof(char) * (len + 1));
+	if (!s2)
+		return (NULL);
+	while (*s1)
+		*s2++ = *s1++;
+	*s2 = '\0';
+	return (s2 - len);
+}

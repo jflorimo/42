@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   script.h                                           :+:      :+:    :+:   */
+/*   ft_lstrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/01 12:33:34 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/05/01 12:33:37 by jflorimo         ###   ########.fr       */
+/*   Created: 2013/12/07 16:31:11 by jflorimo          #+#    #+#             */
+/*   Updated: 2013/12/07 16:32:20 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCRIPT_H
-# define SCRIPT_H
+#include "libft.h"
 
-#endif
+void		ft_lstrev(t_list **begin)
+{
+	t_list	*head;
+	t_list	*tmp;
+	t_list	*tmp1;
+
+	head = *begin;
+	tmp = NULL;
+	while (head != NULL)
+	{
+		tmp1 = tmp;
+		tmp = head;
+		head = head->next;
+		tmp->next = tmp1;
+	}
+	*begin = tmp;
+}
