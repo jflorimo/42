@@ -10,11 +10,11 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME =	ft_script
+NAME =	philo
 
 SRCDIR = srcs/
 
-CFILES =	main.c
+CFILES = main.c eat.c
 
 SRC = $(addprefix $(SRCDIR), $(CFILES))
 GCC = gcc -Wall -Wextra -Werror

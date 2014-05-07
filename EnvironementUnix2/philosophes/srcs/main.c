@@ -1,61 +1,96 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<pthread.h>
-#include<semaphore.h>
-void *func(int n);
-pthread_t philosopher[7];
-pthread_mutex_t chopstick[7];
-int main()
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/05/06 15:02:53 by jflorimo          #+#    #+#             */
+/*   Updated: 2014/05/06 15:34:46 by jflorimo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "philo.h"
+#include "libft.h"
+
+void *thread_1(void *arg)
 {
-  int i,k;
-  void *msg;
-  for(i=1;i<=7;i++)
+    t_data *data;
+    time_t  current_time;
+
+    data = arg;
+    current_time = time(NULL);
+
+    while (time(NULL) < current_time + TIMEOUT)
     {
-      k=pthread_mutex_init(&chopstick[i],NULL);
-      if(k==-1)
-	{
-	  printf("\n Mutex initialization failed");
-	  exit(1);
-	}
+        choose_action(data);
     }
-  for(i=1;i<=7;i++)
-    {
-      k=pthread_create(&philosopher[i],NULL,(void *)func,(int *)i);
-      if(k!=0)
-	{
-	  printf("\n Thread creation error \n");
-	  exit(1);
-	}
-    }
-  for(i=1;i<=7;i++)
-    {
-      k=pthread_join(philosopher[i],&msg);
-      if(k!=0)
-	{
-	  printf("\n Thread join failed \n");
-	  exit(1);
-	}
-    }
-  for(i=1;i<=7;i++)
-    {
-      k=pthread_mutex_destroy(&chopstick[i]);
-      if(k!=0)
-	{
-	  printf("\n Mutex Destroyed \n");
-	  exit(1);
-	}
-    }
-  return 0;
+    return (NULL);
 }
 
-void *func(int n)
+void *life_thread(void *arg)
 {
-  printf("\nPhilosopher %d is thinking ",n);
-  pthread_mutex_lock(&chopstick[n]);//when philosopher 5 is eating he takes fork 1 and fork 5
-  pthread_mutex_lock(&chopstick[(n+1)%5]);
-  printf("\nPhilosopher %d is eating ",n);
-  sleep(3);
-  pthread_mutex_unlock(&chopstick[n]);
-  pthread_mutex_unlock(&chopstick[(n+1)%5]);
-  printf("\nPhilosopher %d Finished eating ",n);
+    t_data  *data;
+    int     i;
+
+    data = arg;
+    while (1)
+    {
+        i = 0;
+        while (i < 7)
+        {
+            if (data[i].etat != 1)
+                data[i].life--;
+            i++;
+        }
+        usleep(1000000);
+    }
+    return (NULL);
+}
+
+void  init_data(void)
+{
+    int         k;
+    int         i;
+    t_data      data[7];
+    pthread_t   philosophe[7];
+    pthread_t   life;
+    t_shared    shared;
+    void *msg;
+
+    init_chopstick(&shared);
+    i = 0;
+    while (i < 7)
+    {
+        data[i].i = i;
+        data[i].shared = &shared;
+        data[i].life = MAX_LIFE;
+        data[i].etat = 0;
+        if ((k = pthread_create(&philosophe[i], NULL, thread_1 , &data[i])) != 0)
+        {
+            ft_putstr("Thread creation error \n");
+            exit(1);
+        }
+        i++;
+    }
+    if ((k = pthread_create(&life, NULL, life_thread , &data)) != 0)
+    {
+        ft_putstr("Thread creation error \n");
+        exit(1);
+    }
+    i = 0;
+    while (i < 7)
+    {
+        k = pthread_join(philosophe[i],&msg);
+        i++;
+    }
+}
+
+int main (void)
+{
+    init_data();
+    return 0;
 }
