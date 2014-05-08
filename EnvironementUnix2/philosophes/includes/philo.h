@@ -19,6 +19,7 @@
 # define REST_T 1
 # define THINK_T 2
 # define TIMEOUT 5
+# define EBUSY 16
 
 typedef struct		s_shared
 {
@@ -35,5 +36,6 @@ typedef struct		s_data
 
 void	choose_action(t_data *data);
 void	init_chopstick(t_shared *shared);
+void	init_time(t_data *data);
 
 #endif

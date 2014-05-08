@@ -16,34 +16,59 @@
 #include "philo.h"
 #include "libft.h"
 
-void	init_chopstick(t_shared *shared)
+void	mange(t_data *data)
 {
-	int	i;
-	int	k;
+	printf("Philosophe %d mange life %d\n",data->i, data->life);
+	data->etat = 2;
+	usleep(EAT_T * 1000000);
+	data->life = MAX_LIFE;
+	pthread_mutex_unlock(&data->shared->chopstick[data->i]);
+	pthread_mutex_unlock(&data->shared->chopstick[(data->i+1)%7]);
+	printf("Philosopher %d fini de manger life %d\n",data->i, data->life);	
+	data->etat = 0;
+}
 
-	i = 0;
-	while (i < 7)
-	{
-		if ((k = pthread_mutex_init(&shared->chopstick[i], NULL)) == -1)
-		{
-			ft_putstr("Mutex initialization failed\n");
-			exit(1);
-		}
-		i++;
-	}
+void	reflechi_current(t_data *data)
+{
+	printf("Philosophe %d reflechi life %d\n",data->i, data->life);
+	data->etat = 1;
+	usleep(THINK_T * 1000000);
+	data->etat = 0;
+	pthread_mutex_unlock(&data->shared->chopstick[data->i]);
+	printf("Philosopher %d fini de reflichir life %d\n",data->i, data->life);	
+}
+
+void	reflechi_other(t_data *data)
+{
+	printf("Philosophe %d reflechi life %d\n",data->i, data->life);
+	data->etat = 1;
+	usleep(THINK_T * 1000000);
+	data->etat = 0;
+	pthread_mutex_unlock(&data->shared->chopstick[(data->i+1)%7]);
+	printf("Philosopher %d fini de reflichir life %d\n",data->i, data->life);	
+}
+
+void	repos(t_data *data)
+{
+	printf("Philosophe %d se repose life %d\n",data->i, data->life);
+	usleep(REST_T * 1000000);
 }
 
 void	choose_action(t_data *data)
 {
-	printf("Philosophe %d au repos life %d\n",data->i, data->life);
-	pthread_mutex_lock(&data->shared->chopstick[data->i]);
-	pthread_mutex_lock(&data->shared->chopstick[(data->i+1)%7]);
-	printf("Philosophe %d mange life %d\n",data->i, data->life);
-	data->etat = 1;
-	usleep(EAT_T * 1000000);
-	pthread_mutex_unlock(&data->shared->chopstick[data->i]);
-	pthread_mutex_unlock(&data->shared->chopstick[(data->i+1)%7]);
-	data->etat = 0;
-	data->life = MAX_LIFE;
-	printf("Philosopher %d fini de manger life %d\n",data->i, data->life);	
+	if (data->etat == 0)
+	{
+		if (pthread_mutex_trylock(&data->shared->chopstick[data->i]) != EBUSY)
+		{
+			if (pthread_mutex_trylock(&data->shared->chopstick[(data->i+1)%7]) != EBUSY)
+				mange(data);
+			else
+				reflechi_current(data);
+		}
+		else
+		{
+			repos(data);
+		}
+	}
+	choose_action(data);
 }

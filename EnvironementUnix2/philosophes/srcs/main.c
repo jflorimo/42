@@ -19,15 +19,10 @@
 void *thread_1(void *arg)
 {
     t_data *data;
-    time_t  current_time;
-
     data = arg;
-    current_time = time(NULL);
 
-    while (time(NULL) < current_time + TIMEOUT)
-    {
-        choose_action(data);
-    }
+    choose_action(data);
+
     return (NULL);
 }
 
@@ -35,20 +30,23 @@ void *life_thread(void *arg)
 {
     t_data  *data;
     int     i;
+    time_t  current_time;
 
     data = arg;
-    while (1)
+    current_time = time(NULL);
+    while (time(NULL) < current_time + TIMEOUT)
     {
         i = 0;
         while (i < 7)
         {
-            if (data[i].etat != 1)
+            if (data[i].etat != 2)
                 data[i].life--;
             i++;
         }
         usleep(1000000);
     }
-    return (NULL);
+    printf("######END######\n");
+    exit(1);
 }
 
 void  init_data(void)
