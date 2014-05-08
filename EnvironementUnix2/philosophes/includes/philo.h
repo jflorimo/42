@@ -6,7 +6,7 @@
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/04/22 17:38:11 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/04/22 17:38:13 by jflorimo         ###   ########.fr       */
+/*   Updated: 2014/05/08 17:33:21 by lcharpen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ typedef struct		s_data
 	int				etat;
 }					t_data;
 
-void	choose_action(t_data *data);
-void	init_chopstick(t_shared *shared);
-void	init_time(t_data *data);
-void	join_thread(pthread_t *philo);
+void				choose_action(t_data *data);
+void				init_chopstick(t_shared *shared);
+void				init_time(t_data *data);
+void				join_thread(pthread_t *philo);
 
 #endif
