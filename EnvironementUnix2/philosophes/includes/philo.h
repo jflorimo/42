@@ -18,12 +18,13 @@
 # define EAT_T 3
 # define REST_T 1
 # define THINK_T 2
-# define TIMEOUT 5
+# define TIMEOUT 10
 # define EBUSY 16
 
 typedef struct		s_shared
 {
 	pthread_mutex_t	chopstick[7];
+	int				pos;
 }					t_shared;
 
 typedef struct		s_data
@@ -37,5 +38,6 @@ typedef struct		s_data
 void	choose_action(t_data *data);
 void	init_chopstick(t_shared *shared);
 void	init_time(t_data *data);
+void	join_thread(pthread_t *philo);
 
 #endif

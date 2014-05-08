@@ -26,39 +26,14 @@ void *thread_1(void *arg)
     return (NULL);
 }
 
-void *life_thread(void *arg)
-{
-    t_data  *data;
-    int     i;
-    time_t  current_time;
-
-    data = arg;
-    current_time = time(NULL);
-    while (time(NULL) < current_time + TIMEOUT)
-    {
-        i = 0;
-        while (i < 7)
-        {
-            if (data[i].etat != 2)
-                data[i].life--;
-            i++;
-        }
-        usleep(1000000);
-    }
-    printf("######END######\n");
-    exit(1);
-}
-
 void  init_data(void)
 {
     int         k;
     int         i;
     t_data      data[7];
     pthread_t   philosophe[7];
-    pthread_t   life;
     t_shared    shared;
-    void *msg;
-
+    
     init_chopstick(&shared);
     i = 0;
     while (i < 7)
@@ -74,17 +49,8 @@ void  init_data(void)
         }
         i++;
     }
-    if ((k = pthread_create(&life, NULL, life_thread , &data)) != 0)
-    {
-        ft_putstr("Thread creation error \n");
-        exit(1);
-    }
-    i = 0;
-    while (i < 7)
-    {
-        k = pthread_join(philosophe[i],&msg);
-        i++;
-    }
+    init_time(data);
+    join_thread(philosophe);
 }
 
 int main (void)
