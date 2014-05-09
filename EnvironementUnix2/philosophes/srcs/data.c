@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <mlx.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -34,10 +35,13 @@ void *life_thread(void *arg)
 			// check_life(data[i], data);
 			i++;
 		}
+		draw(data->shared->mlx, data->shared->win, data, (time(NULL) - current_time));
 		usleep(1000000);
+
 	}
 	printf("######END######\n");
-	exit(1);
+	mlx_loop(data->shared->mlx);
+	return (NULL);
 }
 
 void			init_chopstick(t_shared *shared)

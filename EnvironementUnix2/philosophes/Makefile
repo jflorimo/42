@@ -14,10 +14,10 @@ NAME =	philo
 
 SRCDIR = srcs/
 
-CFILES = main.c eat.c data.c
+CFILES = main.c eat.c data.c data2.c
 
 SRC = $(addprefix $(SRCDIR), $(CFILES))
-GCC = gcc -Wall -Wextra -Werror
+GCC = gcc -Wall -Wextra -Werror -L/usr/X11/lib -lmlx -lXext -lX11
 OBJ = $(SRC:.c=.o)
 HDDIR = includes/
 
