@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <mlx.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "philo.h"
@@ -38,4 +37,25 @@ int		key_hook(int keycode, t_env *e)
 	if (keycode == 65307)
 		exit (1);
 	return (0);
+}
+
+void	check_life(t_data *data)
+{
+	int	i;
+	int	savelife;
+	int	pos;
+
+	i = 1;
+	pos = 5;
+	savelife = data[0].life;
+	while (i < 7)
+	{
+		if (data[i].life < savelife && data[i].etat != 2)
+		{
+			pos = i;
+			savelife = data[i].life;
+		}
+		i++;
+	}
+	data[pos].shared->pos = pos;
 }

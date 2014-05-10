@@ -18,14 +18,14 @@
 # define EAT_T 3
 # define REST_T 1
 # define THINK_T 2
-# define TIMEOUT 10
+# define TIMEOUT 50
 # define EBUSY 16
 
-typedef	struct	s_env
+typedef	struct		s_env
 {
-	void *mlx;
-	void *win;
-}				t_env;
+	void			*mlx;
+	void			*win;
+}					t_env;
 
 typedef struct		s_shared
 {
@@ -42,6 +42,7 @@ typedef struct		s_data
 	int				i;
 	int				life;
 	int				etat;
+	int				prior;
 }					t_data;
 
 void				choose_action(t_data *data);
@@ -52,5 +53,20 @@ void				draw(void *mlx, void *win, t_data *data, int time);
 void				*thread_1(void *arg);
 int					expose_hook(t_env *e);
 int					key_hook(int keycode, t_env *e);
+void				exit_normal(t_data *data);
+int					exit_dead(t_data *data);
+void				mange(t_data *data);
+void				repos(t_data *data);
+void				reflechi_current(t_data *data);
+void				reflechi_other(t_data *data);
+void				draw_philo1(void *mlx, void *win, t_data *data);
+void				draw_philo2(void *mlx, void *win, t_data *data);
+void				draw_philo3(void *mlx, void *win, t_data *data);
+void				draw_philo4(void *mlx, void *win, t_data *data);
+void				draw_philo5(void *mlx, void *win, t_data *data);
+void				draw_philo6(void *mlx, void *win, t_data *data);
+void				draw_philo7(void *mlx, void *win, t_data *data);
+void				check_life(t_data *data);
+int					error(char *s);
 
 #endif

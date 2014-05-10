@@ -11,17 +11,16 @@
 /* ************************************************************************** */
 
 #include <mlx.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "philo.h"
 #include "libft.h"
 
-void *life_thread(void *arg)
+void	*life_thread(void *arg)
 {
-	t_data  *data;
-	int     i;
-	time_t  current_time;
+	t_data	*data;
+	int		i;
+	time_t	current_time;
 
 	data = arg;
 	current_time = time(NULL);
@@ -31,20 +30,22 @@ void *life_thread(void *arg)
 		while (i < 7)
 		{
 			if (data[i].etat != 2)
-			data[i].life--;
-			// check_life(data[i], data);
+				data[i].life--;
 			i++;
 		}
-		draw(data->shared->mlx, data->shared->win, data, (time(NULL) - current_time));
+		draw(data->shared->mlx, data->shared->win, data,
+			(time(NULL) - current_time));
+		if (exit_dead(data))
+			break ;
+		check_life(data);
 		usleep(1000000);
-
 	}
-	printf("######END######\n");
-	mlx_loop(data->shared->mlx);
+	if (!exit_dead(data))
+		exit_normal(data);
 	return (NULL);
 }
 
-void			init_chopstick(t_shared *shared)
+void	init_chopstick(t_shared *shared)
 {
 	int			i;
 	int			k;
@@ -61,50 +62,32 @@ void			init_chopstick(t_shared *shared)
 	}
 }
 
-void			join_thread(pthread_t *philo)
+void	join_thread(pthread_t *philo)
 {
-	int			i = 0;
+	int			i;
 	void		*msg;
 	int			k;
 
+	i = 0;
 	while (i < 7)
 	{
 		if ((k = pthread_join(philo[i], &msg)) != 0)
 		{
 			ft_putstr("Join Thread failed\n");
-			exit(1);			
+			exit(1);
 		}
 		i++;
 	}
 }
 
-void			init_time(t_data *data)
+void	init_time(t_data *data)
 {
 	pthread_t	life;
 	int			k;
 
-	if ((k = pthread_create(&life, NULL, life_thread , data)) != 0)
+	if ((k = pthread_create(&life, NULL, life_thread, data)) != 0)
 	{
 		ft_putstr("Thread creation error \n");
 		exit(1);
 	}
 }
-
-// int			check_life(int pos, t_data *data)
-// {
-// 	int i;
-// 	int savelife;
-
-// 	i = 0;
-// 	savelife = data[pos].life;
-// 	while (i < 7)
-// 	{
-// 		if (data[i].life < savelife)
-// 		{
-// 			data[i].shared->pos =
-// 		}
-// 		i++;
-// 	}
-
-
-// }

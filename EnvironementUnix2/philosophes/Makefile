@@ -14,7 +14,7 @@ NAME =	philo
 
 SRCDIR = srcs/
 
-CFILES = main.c eat.c data.c data2.c
+CFILES = main.c eat.c eat2.c data.c data2.c data3.c exit.c
 
 SRC = $(addprefix $(SRCDIR), $(CFILES))
 GCC = gcc -Wall -Wextra -Werror -L/usr/X11/lib -lmlx -lXext -lX11

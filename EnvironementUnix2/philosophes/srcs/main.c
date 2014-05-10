@@ -11,52 +11,38 @@
 /* ************************************************************************** */
 
 #include <mlx.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "philo.h"
 #include "libft.h"
 
-
 void	draw(void *mlx, void *win, t_data *data, int time)
 {
 	mlx_clear_window(mlx, win);
-	mlx_string_put(mlx, win, 120, 30, 0xFF0000,"P1");
-	mlx_string_put(mlx, win, 120, 40, 0xFF0000,ft_itoa(data[0].life));
-	mlx_string_put(mlx, win, 40, 70, 0xFF0000,"P2");
-	mlx_string_put(mlx, win, 40, 80, 0xFF0000,ft_itoa(data[1].life));
-	mlx_string_put(mlx, win, 40, 120, 0xFF0000,"P3");
-	mlx_string_put(mlx, win, 40, 130, 0xFF0000,ft_itoa(data[2].life));
-	mlx_string_put(mlx, win, 90, 150, 0xFF0000,"P4");
-	mlx_string_put(mlx, win, 90, 160, 0xFF0000,ft_itoa(data[3].life));
-	mlx_string_put(mlx, win, 150, 150, 0xFF0000,"P5");
-	mlx_string_put(mlx, win, 150, 160, 0xFF0000,ft_itoa(data[4].life));
-	mlx_string_put(mlx, win, 200, 120, 0xFF0000,"P6");
-	mlx_string_put(mlx, win, 200, 130, 0xFF0000,ft_itoa(data[5].life));
-	mlx_string_put(mlx, win, 200, 70, 0xFF0000,"P7");
-	mlx_string_put(mlx, win, 200, 80, 0xFF0000,ft_itoa(data[6].life));
-	mlx_string_put(mlx, win, 320, 60, 0xFF0000,"temps:");
-	mlx_string_put(mlx, win, 320, 80, 0xFF0000,ft_itoa(time + 1));
-	mlx_string_put(mlx, win, 340, 80, 0xFF0000,"/");
-	mlx_string_put(mlx, win, 350, 80, 0xFF0000,ft_itoa(TIMEOUT));
+	draw_philo1(mlx, win, data);
+	draw_philo2(mlx, win, data);
+	draw_philo3(mlx, win, data);
+	draw_philo4(mlx, win, data);
+	draw_philo5(mlx, win, data);
+	draw_philo6(mlx, win, data);
+	draw_philo7(mlx, win, data);
+	mlx_string_put(mlx, win, 320, 60, 0xFF0000, "temps:");
+	mlx_string_put(mlx, win, 320, 80, 0xFF0000, ft_itoa(time + 1));
+	mlx_string_put(mlx, win, 340, 80, 0xFF0000, "/");
+	mlx_string_put(mlx, win, 350, 80, 0xFF0000, ft_itoa(TIMEOUT));
+	mlx_string_put(mlx, win, 0, 374, 0x00FF00, "Philosope en repos");
+	mlx_string_put(mlx, win, 0, 386, 0xFF0000, "Philosophe reflechit");
+	mlx_string_put(mlx, win, 0, 398, 0x00FFFF, "Philosiophe mange");
+	mlx_string_put(mlx, win, 0, 410, 0x0000FF, "Philosiophe dort");
 }
 
-void	init_data(void)
+void	init_data(t_shared shared)
 {
 	int			k;
 	int			i;
 	t_data		data[7];
 	pthread_t	philosophe[7];
-	t_shared	shared;
-	t_env		e;
 
-	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, 420, 420 , "Philosophe");
-	mlx_key_hook(e.win, key_hook, &e);
-	mlx_expose_hook(e.win, expose_hook, &e);
-	shared.mlx = e.mlx;
-	shared.win = e.win;
-	init_chopstick(&shared);
 	i = 0;
 	while (i < 7)
 	{
@@ -64,6 +50,8 @@ void	init_data(void)
 		data[i].shared = &shared;
 		data[i].life = MAX_LIFE;
 		data[i].etat = 0;
+		data[i].prior = 0;
+		data[i].shared->pos = 7;
 		if ((k = pthread_create(&philosophe[i], NULL, thread_1, &data[i])) != 0)
 		{
 			ft_putstr("Thread creation error \n");
@@ -77,6 +65,17 @@ void	init_data(void)
 
 int		main (void)
 {
-	init_data();
+	t_env		e;
+	t_shared	shared;
+
+	if ((e.mlx = mlx_init()) == NULL)
+		return (error("mlx init error\n"));
+	e.win = mlx_new_window(e.mlx, 420, 420, "Philosophe");
+	mlx_key_hook(e.win, key_hook, &e);
+	mlx_expose_hook(e.win, expose_hook, &e);
+	shared.mlx = e.mlx;
+	shared.win = e.win;
+	init_chopstick(&shared);
+	init_data(shared);
 	return (0);
 }
