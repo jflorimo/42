@@ -24,19 +24,22 @@ HDDIR = includes/
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		make -C libft/
-		$(GCC) -o $(NAME) $(OBJ) libft/libft.a
+	@make -C libft/
+	@$(GCC) -o $(NAME) $(OBJ) libft/libft.a
+	@echo "\033[33m"compilation of $(NAME) : "\033[32m"Success"\033[0m"
 
 %.o: %.c
-	$(GCC) -c -o $@ $^  -I $(HDDIR)
+	@echo -n .
+	@$(GCC) -c -o $@ $^  -I $(HDDIR)
 
 clean:
-		make -C libft/ clean
-		rm -f $(OBJ)
+	@make -C libft/ clean
+	@rm -f $(OBJ)
 
 fclean: clean
-		make -C libft/ fclean
-		rm -rf $(NAME)
+	@make -C libft/ fclean
+	@rm -rf $(NAME)
+	@echo "\033[31m"$(NAME) : deleted"\033[0m"
 
 re: fclean all
 
