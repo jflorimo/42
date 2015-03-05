@@ -54,33 +54,18 @@ int main(int argc, char *argv[])
 	while((ch = getKeyPressed()) != 27)
 	{
 		clearWindow(my_win);
-
-
 		if (ch == KEY_DOWN)
-		{
 			x++;
-		}
 		else if (ch == KEY_UP)
-		{
 			x--;
-		}
 		else if (ch == KEY_LEFT)
-		{
 			y--;
-		}
 		else if (ch == KEY_RIGHT)
-		{
 			y++;
-		}
-
 		mvprintw(x, y, "yolooo");
-
-
 		refreshWindow(my_win);
 	}
 		
-	destroyWindow(my_win);			/* End curses mode		  */
+	destroyWindow(my_win);
 	return 0;
 }
-
-
