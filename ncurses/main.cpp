@@ -51,8 +51,9 @@ int main(int argc, char *argv[])
 
 	my_win = createWindow(10, 20);
 	refresh();
-	while((ch = getKeyPressed()) != 27)
+	while((ch = wgetch(my_win)) != 27)
 	{
+		printf("key:%d",ch);
 		clearWindow(my_win);
 		if (ch == KEY_DOWN)
 			x++;
@@ -62,7 +63,7 @@ int main(int argc, char *argv[])
 			y--;
 		else if (ch == KEY_RIGHT)
 			y++;
-		mvprintw(x, y, "yolooo");
+		mvprintw(x, y, "yol:%d",ch);
 		refreshWindow(my_win);
 	}
 		
