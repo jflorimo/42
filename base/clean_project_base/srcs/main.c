@@ -6,12 +6,12 @@
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/04/22 16:41:36 by jflorimo          #+#    #+#             */
-/*   Updated: 2014/04/22 16:41:37 by jflorimo         ###   ########.fr       */
+/*   Updated: 2015/04/06 14:19:09 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "script.h"
-#include "libft.h"
+#include <libft.h>
 
 int		main(void)
 {

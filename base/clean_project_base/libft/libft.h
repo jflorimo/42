@@ -6,7 +6,7 @@
 /*   By: jflorimo <jflorimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/07 16:18:57 by jflorimo          #+#    #+#             */
-/*   Updated: 2013/12/09 15:43:27 by jflorimo         ###   ########.fr       */
+/*   Updated: 2015/04/06 14:18:55 by jflorimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_read
+{
+	int				size;
+	int				index;
+	int				fd;
+	char			*read;
+	struct s_read	*next;
+}					t_read;
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);

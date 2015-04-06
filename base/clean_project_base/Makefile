@@ -30,7 +30,7 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	@echo -n .
-	@$(GCC) -c -o $@ $^  -I $(HDDIR)
+	@$(GCC) -c -o $@ $^  -I $(HDDIR) -I libft
 
 clean:
 	@make -C libft/ clean
